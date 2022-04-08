@@ -1,11 +1,11 @@
 package main
 
 import (
-	"errors"
 	"fmt"
-	"github.com/nats-io/nats.go"
 	"os"
 	"strings"
+
+	"github.com/nats-io/nats.go"
 )
 
 func main() {
@@ -47,7 +47,7 @@ func createStream(js nats.JetStreamContext, name string) (*nats.StreamInfo, erro
 func getEnv(variable string) (string, error) {
 	value := os.Getenv(variable)
 	if len(value) == 0 {
-		return value, errors.New(fmt.Sprintf("env variable %s not found\n", variable))
+		return value, fmt.Errorf("env variable %s not found", variable)
 	}
 	return value, nil
 }

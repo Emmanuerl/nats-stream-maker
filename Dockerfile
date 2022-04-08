@@ -10,12 +10,12 @@ RUN go mod download & go mod verify
 
 COPY . .
 
-RUN CGO_ENABLED=0 go build -ldflags="-w -s" -o /app/nats-streams ./main.go
+RUN CGO_ENABLED=0 go build -ldflags="-w -s" -o /app/nats-stream-maker ./src/main.go
 
 FROM gcr.io/distroless/base
 
 WORKDIR /app
 
-COPY --from=builder /app/nats-streams .
+COPY --from=builder /app/nats-stream-maker .
 
-ENTRYPOINT ["/app/nats-streams"]
+ENTRYPOINT ["/app/nats-stream-maker"]
