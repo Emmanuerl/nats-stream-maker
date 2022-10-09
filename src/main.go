@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strings"
 
@@ -11,17 +12,17 @@ import (
 func main() {
 	natsURI, err := getEnv("NATS_URI")
 	if err != nil {
-		gracefulExit(err)
+		log.Fatal(err)
 	}
 
 	streamNames, err := getEnv("STREAMS")
 	if err != nil {
-		gracefulExit(err)
+		log.Fatal(err)
 	}
 
 	nc, err := nats.Connect(natsURI)
 	if err != nil {
-		gracefulExit(err)
+		log.Fatal(err)
 	}
 
 	js, _ := nc.JetStream()
@@ -50,9 +51,4 @@ func getEnv(variable string) (string, error) {
 		return value, fmt.Errorf("env variable %s not found", variable)
 	}
 	return value, nil
-}
-
-func gracefulExit(err error) {
-	fmt.Println(err)
-	os.Exit(1)
 }
